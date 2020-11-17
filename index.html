@@ -1,9 +1,291 @@
-<html>
+<!doctype html>
+<html lang="ja">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>VoiceChanger Demo Page</title>
   </head>
-  <body>
-    <p>
-      Hello, World!
-    </p>
+  <body class="text-center m-3">
+    <div>
+      <div class="text-left">
+        <h2>VoiceChanger Demo Page</h2>
+        深層学習を使ったボイスチェンジャーのサンプル音声を添付するページです．<br>
+        いいものができたら差し替える予定です．<br>
+        <br>
+        スペクトログラムを変換するネットワークと，スペクトログラムを波形にするボコーダーから構成されており，
+        ボコーダーは2種類作成してあります．<br>
+        1つは畳み込み層のみで構成されているため，リアルタイムの0.06倍程度<br>
+        もう1つは再帰ニューラルネットワークを使用しているため，リアルタイムの7倍程度<br>
+        の時間を必要とします．
+      </div>
+      <div>
+        <h3>Audio samples</h3>
+        2020-11-16
+        <table class="table text-left">
+          <thead>
+            <tr>
+              <th scope="col">Condition</th>
+              <th scope="col">Convolution vocoder (Fast)</th>
+              <th scope="col">RNN vocoder (Slow)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Input：JVS004<br>Vocoder only</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_vocoder.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_vocoder.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS001</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.000_1.000.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.000_1.000.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS001*0.9+JVS004*0.1</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.100_0.900.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.100_0.900.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS001*0.8+JVS004*0.2</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.200_0.800.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.200_0.800.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS001*0.7+JVS004*0.3</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.300_0.700.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.300_0.700.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS001*0.6+JVS004*0.4</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.400_0.600.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.400_0.600.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS001*0.5+JVS004*0.5</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.500_0.500.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.500_0.500.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS001*0.4+JVS004*0.6</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.600_0.400.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.600_0.400.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS001*0.3+JVS004*0.7</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.300_0.700.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.300_0.700.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS001*0.2+JVS004*0.8</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.800_0.200.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.800_0.200.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS001*0.1+JVS004*0.9</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.900_0.100.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.900_0.100.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：JVS004</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_0.000_1.000.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_0.000_1.000.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+            <tr>
+              <th>Input：JVS004<br>Target：From JVS004 To JVS 001 linearly</th>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/conv_interap.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+              <td>
+                <audio
+                  controls
+                  src="./assets/2020_11_16/rnn_interap.npy.wav">
+                  Your browser does not support the
+                  <code>audio</code> element.
+                </audio>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
   </body>
 </html>
